@@ -1,21 +1,8 @@
-######## Picamera Object Detection Using Tensorflow Classifier #########
-#
-# Author: Evan Juras
-# Date: 4/15/18
-# Description: 
-# This program uses a TensorFlow classifier to perform object detection.
-# It loads the classifier uses it to perform object detection on a Picamera feed.
-# It draws boxes and scores around the objects of interest in each frame from
-# the Picamera. It also can be used with a webcam by adding "--usbcam"
-# when executing this script from the terminal.
-
 ## Some of the code is copied from Google's example at
 ## https://github.com/tensorflow/models/blob/master/research/object_detection/object_detection_tutorial.ipynb
 
 ## and some is copied from Dat Tran's example at
 ## https://github.com/datitran/object_detector_app/blob/master/object_detection_app.py
-
-## but I changed it to make it more understandable to me.
 
 
 # Import packages
@@ -101,10 +88,6 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 # The camera has to be set up and used differently depending on if it's a
 # Picamera or USB webcam.
 
-# I know this is ugly, but I basically copy+pasted the code for the object
-# detection loop twice, and made one work for Picamera and the other work
-# for USB.
-# Initialize Picamera and grab reference to the raw capture
 camera = PiCamera()
 camera.resolution = (IM_WIDTH,IM_HEIGHT)
 camera.framerate = 10
@@ -127,7 +110,7 @@ the four corners cords are given by:
 for frame1 in camera.capture_continuous(rawCapture, format="bgr",use_video_port=True):
 
     t1 = cv2.getTickCount()
-    
+
     # Acquire frame and expand frame dimensions to have shape: [1, None, None, 3]
     # i.e. a single-column array, where each item in the column has the pixel RGB value
     frame = frame1.array
@@ -144,8 +127,8 @@ for frame1 in camera.capture_continuous(rawCapture, format="bgr",use_video_port=
     for i in range(boxes.shape[0]):
         if scores[i] > 0.4:
             if classes[i] in category_index.keys():
-                # print(category_index[classes[i]]['name'])
-                print(boxes[i])
+                print(category_index[classes[i]]['name'])
+                # print(boxes[i])
 
             
 ##    print("FRAME RATE:\t{}".format(frame_rate_calc))    
